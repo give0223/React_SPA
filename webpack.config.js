@@ -16,8 +16,27 @@ module.exports = {
   },
   module:{
     preLoaders:[
-      
+      {
+        test:/\.js$/|/\.jsx$/,
+        loader:'eslint-loader',
+        include:`${__dirname}/src`,
+        exclude: /bundle\.js$/
+      }
+    ],
+    loaders:[
+      { test: /\.js$/,
+        exclude:/node_modules/,
+        loader: 'babel-loader',
+        query:{
+          presets:['es2015','react']
+        }
+      }
     ]
-  }
-}
+  },
+  devServer:{
+    inline:true,
+    port:8008
+  },
+  plugins:[HTMLWebpackPluginConfig]
+};
 
