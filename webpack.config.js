@@ -1,5 +1,6 @@
 //可以動態插入bundle的.js檔案到index.html中
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
   filename: 'index.html',
@@ -11,20 +12,20 @@ module.exports = {
     './src/index.js'
   ],
   output:{
-    path:`${__dirname}/dist`,
+    path: path.resolve(__dirname,'dist'),
     filename: 'index_bundle.js'
   },
   module:{
-    preLoaders:[
+    rules:[
       {
-        test:/\.js$/|/\.jsx$/,
+        enforce:'pre',
+        test:/\.jsx$|\.js$/,
         loader:'eslint-loader',
         include:`${__dirname}/src`,
         exclude: /bundle\.js$/
-      }
-    ],
-    loaders:[
-      { test: /\.js$/,
+      },
+      { 
+        test: /\.js$/,
         exclude:/node_modules/,
         loader: 'babel-loader',
         query:{
